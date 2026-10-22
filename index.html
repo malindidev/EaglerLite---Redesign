@@ -1,25 +1,322 @@
 <!DOCTYPE html>
-<html style="width:100%;height:100%;background-color:#13171c;">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>EaglerLite</title>
-<script>
-window.disableUserscripts = true;
-window.__eaglercraftLoaderClient = {
-  container: "game_frame",
-  name: "EaglerLite",
-  file: "net.peytonplayz585.eaglercraft.v1_12.client",
-  cid: "bafybeidrnchyech7b26rqhm3tayt7p6mxvl23lzd4f5mcyqda7hbrzyal4",
-  path: "",
-  download: "source%20file/1-12source.gz",
-  dlSize: 15601341,
-  gzip: true
-};
-</script>
-<script src="source%20file/loader.js"></script>
+<style>
+:root{--bg:#13171c;--s:#1b2128;--r:#252d36;--l:#333e4a;--t:#e8ebef;--m:#98a3b0;--a:#6fbf73;--e:#f0716a;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:15px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+.wrap{max-width:760px;margin:0 auto;padding:28px 18px 64px}
+body.compact .wrap{padding-top:14px}body.compact .row{padding:6px 0}body.compact .grp{margin-top:16px}
+header{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.logo{width:52px;height:52px;border-radius:6px;image-rendering:pixelated}
+h1{margin:0;font-size:26px;letter-spacing:-.01em;line-height:1.15}
+.sub{margin:2px 0 0;color:var(--m);font-size:13px}
+.chips{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;font-size:12.5px;color:var(--m)}
+.chip{border:1px solid var(--l);border-radius:999px;padding:2px 10px}
+.chip.ok{color:var(--a);border-color:var(--a)}.chip.bad{color:var(--e);border-color:var(--e)}
+.launch{margin-top:26px;display:flex;flex-direction:column;gap:14px}
+.bar{display:grid;grid-template-columns:repeat(24,1fr);gap:3px;height:16px}
+.seg{background:var(--r);border-radius:2px}.bar.on .seg{background:var(--a)}
+.bar.busy .seg{animation:p 1.4s ease-in-out infinite;animation-delay:calc(var(--i)*45ms)}
+@keyframes p{0%,100%{background:var(--r)}50%{background:#3b4d3f}}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+button,select,input,textarea{font:inherit;color:var(--t)}
+.btn{background:var(--r);border:1px solid var(--l);border-radius:6px;padding:7px 14px;cursor:pointer}
+.btn:hover{background:#2e3844}.btn.pri{background:var(--a);border-color:var(--a);color:#0e1a0f;font-weight:650}.btn.pri:hover{background:#85cd89}
+.btn.big{padding:11px 26px;font-size:16px}.btn.dng{border-color:var(--e);color:var(--e)}
+:focus-visible{outline:2px solid var(--a);outline-offset:2px}
+.say{color:var(--m);font-size:13.5px;min-height:21px}
+.panel{border:1px solid var(--l);border-radius:8px;padding:14px;background:var(--s);margin-top:14px}
+.panel[hidden]{display:none}.panel h3{margin:0 0 6px;font-size:15px}
+textarea,input[type=text],input[type=number],select{width:100%;background:var(--s);border:1px solid var(--l);border-radius:6px;padding:7px 10px}
+textarea{font:12.5px/1.5 ui-monospace,Menlo,Consolas,monospace;resize:vertical}
+.hist{margin:0;padding:0;list-style:none;color:var(--m);font-size:13px}
+.hist li{padding:2px 0}.hist b{color:var(--t);font-weight:500}
+.find{margin-top:28px}
+.grp{margin-top:26px}.grp h2{margin:0;font-size:17px;padding-bottom:6px;border-bottom:1px solid var(--l)}
+.row{padding:10px 0;border-bottom:1px solid #222a33}
+.row label.t{display:block;font-weight:550}
+.hint{margin:2px 0 0;color:var(--m);font-size:13px;max-width:64ch}
+.row .ctl{margin-top:6px;display:flex;gap:8px}
+.row.chkr{display:grid;grid-template-columns:1fr auto;gap:2px 16px;align-items:center}
+.row.chkr .hint{grid-column:1}
+.sw{appearance:none;width:42px;height:24px;border-radius:12px;background:var(--r);border:1px solid var(--l);position:relative;cursor:pointer;grid-row:1/3;grid-column:2}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--m);transition:left .12s}
+.sw:checked{background:var(--a);border-color:var(--a)}.sw:checked::after{left:20px;background:#0e1a0f}
+.mods{margin:8px 0 0;padding:0;list-style:none}
+.mods li{display:flex;gap:10px;align-items:center;padding:6px 0;border-top:1px solid #222a33}
+.mods span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.drop.over{outline:2px dashed var(--a)}
+footer{margin-top:40px;color:var(--m);font-size:12.5px}
+dialog{background:var(--s);color:var(--t);border:1px solid var(--l);border-radius:10px;padding:20px;width:min(460px,92vw)}
+dialog::backdrop{background:rgba(8,10,13,.72)}
+dialog h3{margin:0 0 8px}dialog .acts{justify-content:flex-end;margin-top:14px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 18px}.kv code{color:var(--a)}
+.dg div{padding:2px 0}.dg .y{color:var(--a)}.dg .n{color:var(--e)}
+#emb{position:fixed;inset:0;background:#000;z-index:99}#emb iframe{width:100%;height:100%;border:0}
+#emb button{position:absolute;top:10px;right:10px;z-index:2}
+@media (prefers-reduced-motion:reduce){.bar.busy .seg{animation:none}}
+</style>
 </head>
-<body style="margin:0;width:100%;height:100%;overflow:hidden;background-color:#13171c;">
-<div id="game_frame" style="width:100%;height:100%;"></div>
+<body>
+<div class="wrap">
+<header>
+<img class="logo" id="logo" alt="">
+<div><h1>EaglerLite</h1><p class="sub">Eaglercraft launcher. Version 4.0.0</p></div>
+<div class="chips"><span class="chip" id="cproxy">Proxy: not set</span><span class="chip" id="cmode">Mode: standard</span></div>
+</header>
+
+<section class="launch">
+<div class="acts">
+<button class="btn pri big" id="go">Launch game</button>
+<button class="btn" id="dl">Download local</button>
+<button class="btn" id="safeb">Safe mode</button>
+</div>
+<div class="bar on" id="bar"></div>
+<div class="say" id="say" role="status">Ready. Adjust the settings below, then launch.</div>
+<section class="panel" id="safe" hidden>
+<h3>Safe mode: manual source</h3>
+<p class="hint">Use this when the game files cannot be reached. Paste the full Eaglercraft source XML or HTML below.</p>
+<textarea id="src" rows="6" aria-label="Eaglercraft source"></textarea>
+<div class="acts" style="margin-top:8px"><button class="btn pri" id="srcgo">Launch from source</button><button class="btn" id="srcx">Close</button></div>
+</section>
+<section class="panel"><h3>Recent launches</h3><ul class="hist" id="hist"></ul></section>
+</section>
+
+<div class="find"><input type="text" id="q" placeholder="Search settings (press /)" aria-label="Search settings"></div>
+<main id="opts"></main>
+
+<div class="grp" id="modsg">
+<h2>JavaScript mods <span class="hint" id="modn"></span></h2>
+<div class="row drop" id="drop">
+<p class="hint">Import .js files, or drop them here. Enabled mods run on the game page after it loads.</p>
+<div class="ctl"><button class="btn" id="impm">Import .js</button><input type="file" id="mf" accept=".js" multiple hidden></div>
+<ul class="mods" id="modl"></ul>
+</div>
+</div>
+
+<div class="grp" id="profg">
+<h2>Profiles and config</h2>
+<div class="row">
+<label class="t" for="pname">Profile</label>
+<div class="ctl"><input type="text" id="pname" placeholder="Profile name"><button class="btn" id="psave">Save</button></div>
+<div class="ctl"><select id="psel" aria-label="Saved profiles"></select><button class="btn" id="pload">Load</button><button class="btn dng" id="pdel">Delete</button></div>
+</div>
+<div class="row"><div class="acts">
+<button class="btn pri" id="csave">Save config</button><button class="btn" id="creset">Reset to defaults</button>
+<button class="btn" id="cexp">Export JSON</button><button class="btn" id="cimp">Import JSON</button><input type="file" id="cf" accept=".json" hidden>
+<button class="btn" id="curl">Copy launch URL</button><button class="btn" id="cdiag">Diagnose</button>
+</div></div>
+</div>
+
+<footer>EaglerLite 4.0.0. Ctrl+Enter launches, ? shows shortcuts. Not affiliated with Mojang or Microsoft. Apache 2.0.</footer>
+</div>
+
+<dialog id="dlg"><h3 id="dt"></h3><p class="hint" id="db"></p><div class="acts"><button class="btn" id="dn">Cancel</button><button class="btn pri" id="dy">Confirm</button></div></dialog>
+<dialog id="help"><h3>Keyboard shortcuts</h3><div class="kv">
+<code>Ctrl+Enter</code><span>Launch game</span><code>?</code><span>Show or hide this list</span><code>Esc</code><span>Close dialogs</span>
+<code>S</code><span>Save config</span><code>R</code><span>Reset to defaults</span><code>D</code><span>Download local launcher</span>
+<code>/</code><span>Search settings</span><code>P</code><span>Safe mode</span><code>X</code><span>Diagnose</span><code>C</code><span>Compact mode</span>
+</div><div class="acts"><button class="btn" data-close>Close</button></div></dialog>
+<dialog id="diag"><h3>Diagnose</h3><div class="dg" id="dgb"></div><div class="acts"><button class="btn" data-close>Close</button></div></dialog>
+
+<script>
+function runtime(C){
+const d=document,I=C.icons;let cur="",last="",cloaked=false,hid=false,saved=null,lk=0;
+function guess(t){t=t.toLowerCase();for(const k in I)if(k!=="blank"&&k!=="minecraft"&&t.indexOf(k)>=0)return k;return null}
+function emoji(e){return"data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">'+e+"</text></svg>")}
+function base(){return C.favicon?(/^(https?:|data:)/.test(C.favicon)?C.favicon:emoji(C.favicon)):(I[C.favPreset]||I.blank)}
+function mask(u){return new Promise(r=>{const i=new Image();i.onload=()=>{const c=d.createElement("canvas");c.width=c.height=32;c.getContext("2d").drawImage(i,0,0,32,32);r(c.toDataURL("image/png"))};i.onerror=()=>r(u);i.src=u})}
+async function fav(u){cur=u;let x=u;if(C.mask)x=await mask(x);if(C.blob){try{x=URL.createObjectURL(await(await fetch(x)).blob())}catch(e){}}
+d.querySelectorAll("link[rel~=icon]").forEach(n=>n.remove());const l=d.createElement("link");l.rel="icon";l.href=x;last=x;d.head.appendChild(l)}
+function show(t,u){d.title=t;fav(u)}
+show(C.title,base());
+if(C.persist)setInterval(()=>{const l=d.querySelector("link[rel~=icon]");if(!l||l.href!==last)fav(cur);if(!C.cycle&&!cloaked&&d.title!==C.title)d.title=C.title},2000);
+if(C.cycle){const L=C.cycleList.split("\n").map(s=>s.trim()).filter(Boolean).map(s=>{const p=s.split("|");return[p[0].trim(),(p[1]||"").trim()]});
+if(L.length){let n=0;setInterval(()=>{if(cloaked)return;const e=L[n++%L.length],k=e[1]&&I[e[1]]?e[1]:(C.pair?guess(e[0]):null);show(e[0],k?I[k]:base())},Math.max(1,C.cycleSec)*1000)}}
+function cloak(){if(cloaked)return;cloaked=true;saved=[d.title,cur];const E=["classroom","docs","drive","desmos","khan","quizlet"],k=E[Math.floor(Math.random()*E.length)];show(C.names[k],I[k])}
+function uncloak(){if(!cloaked)return;cloaked=false;show(saved[0],saved[1])}
+addEventListener("blur",()=>{if(C.blurCloak)cloak()});addEventListener("focus",uncloak);
+function panic(){try{window.open(C.panicLink,"_blank")}catch(e){}try{window.close()}catch(e){}location.replace(C.panicLink)}
+addEventListener("keydown",e=>{if(e.ctrlKey||e.altKey||e.metaKey||!C.panicKey||e.key.toLowerCase()!==C.panicKey.toLowerCase())return;const n=Date.now();if(C.dbl&&n-lk>500){lk=n;return}panic()},true);
+let pt=0;d.addEventListener("visibilitychange",()=>{hid=d.hidden;clearTimeout(pt);if(hid&&C.vis)pt=setTimeout(()=>{if(d.hidden)panic()},3000)});
+if(C.mute){const cs=[];["AudioContext","webkitAudioContext"].forEach(k=>{const O=window[k];if(!O)return;const N=function(...a){const c=new O(...a);cs.push(c);return c};N.prototype=O.prototype;window[k]=N});
+d.addEventListener("visibilitychange",()=>cs.forEach(c=>{try{d.hidden?c.suspend():c.resume()}catch(e){}}))}
+if(C.noref){const m=d.createElement("meta");m.name="referrer";m.content="no-referrer";d.head.appendChild(m);try{Object.defineProperty(d,"referrer",{get:()=>""})}catch(e){}try{window.opener=null}catch(e){}}
+window.__eaglerliteJoin=C.server||"";
+if(C.proxy){const O=window.WebSocket;
+const prox=u=>C.proxy.indexOf("{url}")>=0?C.proxy.replace("{url}",encodeURIComponent(u)):C.proxy+(C.proxy.indexOf("?")>=0?"&":"?")+"url="+encodeURIComponent(u);
+function WS(u,p){const t=this,E=[];let s,bt="blob",fb=false,op=false;t._L={};t._g=()=>s;t._b=v=>{bt=v;if(s)s.binaryType=v};
+function go(url){const k=s=p?new O(url,p):new O(url);k.binaryType=bt;
+["open","message","close","error"].forEach(n=>k.addEventListener(n,e=>{if(k!==s)return;if(n==="open")op=true;
+if(!op&&!fb&&(n==="error"||n==="close")){if(n==="close"){fb=true;go(prox(u))}return}
+if(t._L[n])t._L[n].call(t,e);E.forEach(x=>{if(x[0]===n)x[1].call(t,e)})}))}
+t.addEventListener=(n,f)=>E.push([n,f]);t.removeEventListener=(n,f)=>{const i=E.findIndex(x=>x[0]===n&&x[1]===f);if(i>=0)E.splice(i,1)};go(u)}
+["open","message","close","error"].forEach(n=>Object.defineProperty(WS.prototype,"on"+n,{get(){return this._L[n]},set(f){this._L[n]=f}}));
+Object.defineProperty(WS.prototype,"readyState",{get(){return this._g().readyState}});
+Object.defineProperty(WS.prototype,"url",{get(){return this._g().url}});
+Object.defineProperty(WS.prototype,"binaryType",{get(){return this._g().binaryType},set(v){this._b(v)}});
+WS.prototype.send=function(x){this._g().send(x)};WS.prototype.close=function(c,r){this._g().close(c,r)};
+Object.assign(WS,{CONNECTING:0,OPEN:1,CLOSING:2,CLOSED:3});window.WebSocket=WS}
+addEventListener("load",()=>C.mods.forEach(m=>{try{const s=d.createElement("script");s.textContent=m.code;d.head.appendChild(s)}catch(e){console.error(e)}}));
+}
+</script>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const ls={g(k,f){try{const v=localStorage.getItem(k);return v?JSON.parse(v):f}catch(e){return f}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!==undefined)e.textContent=x;return e};
+const FAVS=[["classroom","Google Classroom","C","#1e8e3e"],["docs","Google Docs","D","#4285f4"],["drive","Google Drive","D","#f4b400"],["gmail","Gmail","M","#ea4335"],["calendar","Google Calendar","31","#1a73e8"],["slides","Google Slides","S","#f4b400"],["sheets","Google Sheets","S","#0f9d58"],["meet","Google Meet","M","#00897b"],["khan","Khan Academy","K","#14bf96"],["wiki","Wikipedia","W","#555555"],["teams","Microsoft Teams","T","#5b5fc7"],["onenote","Microsoft OneNote","N","#7719aa"],["canvas","Canvas LMS","C","#e72429"],["powerschool","PowerSchool","P","#005eb8"],["desmos","Desmos","D","#2e8b57"],["quizlet","Quizlet","Q","#4255ff"],["clever","Clever","C","#4274f6"],["sites","Google Sites","S","#4285f4"],["minecraft","Minecraft (grass block)","",""],["blank","Blank (transparent)","",""]];
+const TITLES=[["Untitled document","docs"],["Home - Classroom","classroom"],["My Drive","drive"],["Dashboard","canvas"],["Graph1 - Desmos","desmos"],["Untitled Flashcard Set","quizlet"],["Clever | Portal","clever"],["New Tab","blank"]];
+const sv=(l,c)=>"data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="'+c+'"/><text x="16" y="22" font-size="17" font-family="Arial" font-weight="700" fill="#fff" text-anchor="middle">'+l+"</text></svg>");
+const ICONS={},NAMES={};
+FAVS.forEach(f=>{NAMES[f[0]]=f[1];ICONS[f[0]]=f[0]==="blank"?"data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"/>'):f[0]==="minecraft"?"data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" fill="#7a5230"/><rect width="32" height="11" fill="#5fa84a"/></svg>'):sv(f[2],f[3])});
+const D={version:"1.12.2",title:"Home - Classroom",favPreset:"classroom",favicon:"",panicLink:"https://classroom.google.com",panicKey:"End",proxy:"",server:"",mask:false,persist:true,blob:false,cycle:false,cycleSec:5,cycleList:"Google Classroom|classroom\nGoogle Docs - Untitled document|docs\nGmail - Inbox|gmail\nClever | Portal|clever",pair:true,noref:false,blurCloak:false,mute:true,dbl:false,vis:false,compact:false};
+const S=[
+["Launch configuration",[
+["sel","version","Game version","The build bundled with this launcher.",[["1.12.2","Eaglercraft 1.12.2 (stable)"]]],
+["sel","_tp","Title preset","Sets the tab title and a matching icon in one step.",[["","Choose a preset"]].concat(TITLES.map((t,i)=>[String(i),t[0]]))],
+["txt","title","Tab title","Shown on the game tab."],
+["sel","favPreset","Favicon preset","Generated icons, not official logos.",FAVS.map(f=>[f[0],f[1]])],
+["txt","favicon","Tab favicon","An emoji or an image URL. Overrides the preset when filled in."],
+["txt","panicLink","Panic link","Opens when the panic key is pressed."],
+["key","panicKey","Panic key","Closes the game tab and opens the panic link."]]],
+["Connection",[
+["txt","proxy","WebSocket proxy URL","Used when a direct connection fails. Put {url} where the server address goes, otherwise it is added as ?url=. Leave empty for direct only."],
+["txt","server","Join server","A wss:// address that connects after launch."]]],
+["Tab cloaking",[
+["chk","mask","Mask favicon","Re-encodes the icon through a canvas before use."],
+["chk","persist","Keep favicon applied","Re-applies your icon every 2 seconds if the game changes it."],
+["chk","blob","Blob URL favicon","Serves the icon from a blob: URL instead of a data: URL."],
+["chk","cycle","Cycle tab title","Rotates through the title list below."],
+["num","cycleSec","Cycle interval in seconds","How long each title stays."],
+["area","cycleList","Title list","One title per line. Add |preset to pick an icon, for example Gmail - Inbox|gmail."],
+["chk","pair","Match favicon to title","Titles without a |preset get an icon by keyword."],
+["chk","noref","Strip referrer","Adds a no-referrer policy, empties document.referrer and clears window.opener."],
+["chk","blurCloak","Cloak on blur","Swaps to a random educational title and icon when the tab loses focus."]]],
+["Audio and panic",[
+["chk","mute","Mute when hidden","Suspends game audio while the tab is in the background."],
+["chk","dbl","Double-tap panic","Needs two presses of the panic key within 500 ms."],
+["chk","vis","Panic when hidden","Triggers panic if the tab stays hidden for 3 seconds."]]],
+["Interface",[["chk","compact","Compact mode","Tighter spacing."]]]];
+let cfg=Object.assign({},D,ls.g("el.cfg",{}));
+try{if(location.hash.indexOf("#c=")===0){cfg=Object.assign({},D,JSON.parse(decodeURIComponent(escape(atob(location.hash.slice(3))))));history.replaceState(null,"",location.pathname+location.search)}}catch(e){}
+const save=()=>ls.s("el.cfg",cfg);
+const say=m=>{$("#say").textContent=m};
+const BASE=(document.querySelector("meta[name=el-base]")||{}).content||location.href;
+const abs=p=>new URL(p,BASE).href;
+const LOADER=abs("source%20file/loader.js"),GZ=abs("source%20file/1-12source.gz");
+$("#logo").src=ICONS.minecraft;
+const bar=$("#bar");for(let i=0;i<24;i++){const s=el("span","seg");s.style.setProperty("--i",i);bar.appendChild(s)}
+
+function setField(k,v){cfg[k]=v;save();if(k==="compact")applyMode()}
+function applyMode(){document.body.classList.toggle("compact",!!cfg.compact);$("#cmode").textContent="Mode: "+(cfg.compact?"compact":"standard")}
+function render(){
+const root=$("#opts");root.textContent="";
+S.forEach(g=>{const sec=el("section","grp");sec.appendChild(el("h2","",g[0]));
+g[1].forEach(f=>{const ty=f[0],k=f[1],row=el("div","row"+(ty==="chk"?" chkr":""));
+const id="f_"+k,lab=el("label","t",f[2]);lab.htmlFor=id;
+let c;
+if(ty==="chk"){c=el("input","sw");c.type="checkbox";c.checked=!!cfg[k];c.onchange=()=>setField(k,c.checked);c.id=id;row.appendChild(lab);row.appendChild(c)}
+else{row.appendChild(lab);
+if(ty==="sel"){c=el("select");f[4].forEach(o=>{const op=el("option","",o[1]);op.value=o[0];c.appendChild(op)});if(k!=="_tp")c.value=cfg[k];
+c.onchange=()=>{if(k==="_tp"){const t=TITLES[+c.value];if(t){cfg.title=t[0];cfg.favPreset=t[1];cfg.favicon="";save();render()}}else setField(k,c.value)}}
+else if(ty==="area"){c=el("textarea");c.rows=4;c.value=cfg[k];c.oninput=()=>setField(k,c.value)}
+else if(ty==="key"){c=el("input");c.type="text";c.readOnly=true;c.value=cfg[k];
+const b=el("button","btn","Capture");b.type="button";b.onclick=()=>{c.value="Press a key";const h=e=>{e.preventDefault();e.stopPropagation();setField(k,e.key);c.value=e.key;removeEventListener("keydown",h,true)};addEventListener("keydown",h,true)};
+const w=el("div","ctl");c.id=id;w.appendChild(c);w.appendChild(b);row.appendChild(w);c=null}
+else{c=el("input");c.type=ty==="num"?"number":"text";c.value=cfg[k];c.oninput=()=>setField(k,ty==="num"?Math.max(1,+c.value||1):c.value);if(ty==="num")c.min=1}
+if(c){c.id=id;const w=el("div","ctl");w.appendChild(c);row.appendChild(w)}}
+if(f[3]){row.appendChild(el("p","hint",f[3]))}
+sec.appendChild(row)});
+root.appendChild(sec)});
+applyMode();filter()}
+function filter(){const q=$("#q").value.trim().toLowerCase();$$("#opts .grp").forEach(g=>{let n=0;$$(".row",g).forEach(r=>{const m=!q||r.textContent.toLowerCase().indexOf(q)>=0||[...r.querySelectorAll("input,select,textarea")].some(i=>(i.value||"").toLowerCase().indexOf(q)>=0);r.hidden=!m;if(m)n++});g.hidden=!n})}
+$("#q").oninput=filter;
+
+function rt(c){const o=Object.assign({},c,{icons:ICONS,names:NAMES,mods:ls.g("el.mods",[]).filter(m=>m.on)});
+return"<script>("+runtime.toString()+")("+JSON.stringify(o).replace(/</g,"\\u003c")+");<\/script>"}
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function buildDoc(c){
+return'<!DOCTYPE html><html style="width:100%;height:100%;background:#13171c"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><title>'+esc(c.title)+"</title><script>window.disableUserscripts=true;window.__eaglercraftLoaderClient={container:\"game_frame\",name:"+JSON.stringify(c.title)+',file:"net.peytonplayz585.eaglercraft.v1_12.client",cid:"bafybeidrnchyech7b26rqhm3tayt7p6mxvl23lzd4f5mcyqda7hbrzyal4",path:"",download:'+JSON.stringify(GZ)+",dlSize:15601341,gzip:true};<\/script>"+rt(c)+'<script src="'+LOADER+'"><\/script></head><body style="margin:0;width:100%;height:100%;overflow:hidden;background:#13171c"><div id="game_frame" style="width:100%;height:100%"></div></body></html>'}
+function embed(doc){const w=el("div");w.id="emb";const f=document.createElement("iframe");f.allow="fullscreen; pointer-lock; autoplay";f.srcdoc=doc;const b=el("button","btn","Close (Esc)");b.onclick=()=>w.remove();w.appendChild(f);w.appendChild(b);document.body.appendChild(w)}
+function history_(c){const h=ls.g("el.hist",[]);h.unshift({t:Date.now(),title:c.title,server:c.server});ls.s("el.hist",h.slice(0,5));drawHist()}
+function drawHist(){const u=$("#hist");u.textContent="";const h=ls.g("el.hist",[]);if(!h.length){u.appendChild(el("li","","No launches yet. Your last 5 appear here."));return}
+h.forEach(x=>{const li=el("li");li.appendChild(el("b","",new Date(x.t).toLocaleString([], {month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})));li.appendChild(document.createTextNode("  "+x.title+(x.server?"  to "+x.server:"")));u.appendChild(li)})}
+function launch(doc){
+const c=Object.assign({},cfg);history_(c);doc=doc||buildDoc(c);
+bar.classList.add("busy");setTimeout(()=>bar.classList.remove("busy"),1600);
+let w=null;try{w=window.open("about:blank","_blank")}catch(e){}
+if(w){w.document.open();w.document.write(doc);w.document.close();say("Launched in a new tab.")}
+else{embed(doc);say("Popups are blocked, so the game is running embedded. Allow popups for a full tab.")}}
+$("#go").onclick=()=>launch();
+$("#safeb").onclick=()=>{$("#safe").hidden=!$("#safe").hidden};$("#srcx").onclick=()=>{$("#safe").hidden=true};
+$("#srcgo").onclick=()=>{let t=$("#src").value.replace(/^\s*<\?xml[^>]*\?>/,"").trim();const m=t.match(/<!\[CDATA\[([\s\S]*?)\]\]>/);if(m)t=m[1];if(!t){say("Paste the source first.");return}
+t=/<head[^>]*>/i.test(t)?t.replace(/<head[^>]*>/i,x=>x+rt(cfg)):rt(cfg)+t;launch(t)};
+$("#dl").onclick=()=>{const m=document.createElement("meta");m.name="el-base";m.content=location.href.split("#")[0];const h="<!DOCTYPE html>\n"+document.documentElement.outerHTML.replace("<head>","<head>"+m.outerHTML);
+const a=el("a");a.href=URL.createObjectURL(new Blob([h],{type:"text/html"}));a.download="eaglerlite.html";a.click();say("Downloaded eaglerlite.html.")};
+
+const dlg=$("#dlg");
+function ask(t,b,ok){return new Promise(r=>{$("#dt").textContent=t;$("#db").textContent=b;$("#dy").textContent=ok;let v=false;$("#dy").onclick=()=>{v=true;dlg.close()};$("#dn").onclick=()=>dlg.close();dlg.onclose=()=>r(v);dlg.showModal()})}
+$$("[data-close]").forEach(b=>b.onclick=()=>b.closest("dialog").close());
+
+function profs(){return ls.g("el.profiles",{})}
+function drawProf(){const s=$("#psel");s.textContent="";const p=profs(),n=Object.keys(p);if(!n.length){const o=el("option","","No saved profiles");o.value="";s.appendChild(o)}n.forEach(k=>{const o=el("option","",k);o.value=k;s.appendChild(o)})}
+$("#psave").onclick=()=>{const n=$("#pname").value.trim();if(!n){say("Enter a profile name.");return}const p=profs();p[n]=Object.assign({},cfg);ls.s("el.profiles",p);drawProf();$("#psel").value=n;say("Saved profile "+n+".")};
+$("#pload").onclick=()=>{const p=profs()[$("#psel").value];if(!p){say("Choose a profile first.");return}cfg=Object.assign({},D,p);save();render();say("Loaded profile "+$("#psel").value+".")};
+$("#pdel").onclick=async()=>{const n=$("#psel").value;if(!n)return;if(await ask("Delete profile",'Delete the profile "'+n+'"? This cannot be undone.',"Delete")){const p=profs();delete p[n];ls.s("el.profiles",p);drawProf();say("Deleted "+n+".")}};
+$("#csave").onclick=()=>{save();say("Config saved.")};
+async function reset(){if(await ask("Reset to defaults","This restores every setting to its default. Saved profiles are kept.","Reset")){cfg=Object.assign({},D);save();render();say("Settings reset.")}}
+$("#creset").onclick=reset;
+$("#cexp").onclick=()=>{const a=el("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(cfg,null,2)],{type:"application/json"}));a.download="eaglerlite-config.json";a.click()};
+$("#cimp").onclick=()=>$("#cf").click();
+$("#cf").onchange=async e=>{try{cfg=Object.assign({},D,JSON.parse(await e.target.files[0].text()));save();render();say("Config imported.")}catch(x){say("That file is not a valid config.")}e.target.value=""};
+$("#curl").onclick=async()=>{const u=location.href.split("#")[0]+"#c="+btoa(unescape(encodeURIComponent(JSON.stringify(cfg))));try{await navigator.clipboard.writeText(u);say("Launch URL copied.")}catch(e){say("Copy failed. Select the address bar after loading: "+u.slice(0,60)+"...")}};
+
+function mods(){return ls.g("el.mods",[])}
+function drawMods(){const l=$("#modl");l.textContent="";const m=mods();$("#modn").textContent=m.length?"("+m.length+")":"";
+m.forEach((x,i)=>{const li=el("li");const c=el("input","sw");c.type="checkbox";c.checked=x.on;c.setAttribute("aria-label","Enable "+x.name);c.onchange=()=>{const a=mods();a[i].on=c.checked;ls.s("el.mods",a)};
+const r=el("button","btn dng","Remove");r.onclick=()=>{const a=mods();a.splice(i,1);ls.s("el.mods",a);drawMods()};
+li.style.gridTemplateColumns="none";li.appendChild(c);li.appendChild(el("span","",x.name));li.appendChild(r);l.appendChild(li)})}
+async function addMods(files){const a=mods();for(const f of files){if(!/\.js$/i.test(f.name))continue;a.push({name:f.name,code:await f.text(),on:true})}ls.s("el.mods",a);drawMods()}
+$("#impm").onclick=()=>$("#mf").click();$("#mf").onchange=e=>{addMods(e.target.files);e.target.value=""};
+const dr=$("#drop");dr.ondragover=e=>{e.preventDefault();dr.classList.add("over")};dr.ondragleave=()=>dr.classList.remove("over");dr.ondrop=e=>{e.preventDefault();dr.classList.remove("over");addMods(e.dataTransfer.files)};
+
+function wsTest(u,ms){return new Promise((ok,no)=>{let w;const t=setTimeout(()=>{try{w.close()}catch(e){}no(Error("Timed out"))},ms);try{w=new WebSocket(u)}catch(e){clearTimeout(t);no(e);return}w.onopen=()=>{clearTimeout(t);w.close();ok(true)};w.onerror=()=>{clearTimeout(t);no(Error("Unreachable"))}})}
+async function proxyChip(){const c=$("#cproxy");c.className="chip";if(!cfg.proxy){c.textContent="Proxy: not set";return}c.textContent="Proxy: checking...";
+try{await wsTest(cfg.proxy.replace("{url}","wss%3A%2F%2Fexample.com"),4000);c.textContent="Proxy: online";c.classList.add("ok")}catch(e){c.textContent="Proxy: offline";c.classList.add("bad")}}
+async function diag(){const o=$("#dgb");o.textContent="Running checks...";$("#diag").showModal();const r=[];
+const t=async(n,f)=>{try{const v=await f();r.push([1,n,v===true?"":v])}catch(e){r.push([0,n,e.message||String(e)])}};
+await t("Local storage",()=>{localStorage.setItem("el.t","1");localStorage.removeItem("el.t");return true});
+await t("IndexedDB cache",()=>{if(!window.indexedDB)throw Error("Not supported");return true});
+await t("Gzip decompression",()=>{if(typeof DecompressionStream==="undefined")throw Error("Not supported");return true});
+await t("WebGL 2",()=>{if(!document.createElement("canvas").getContext("webgl2"))throw Error("Not available");return true});
+await t("Loader script",async()=>{const x=await fetch(LOADER,{method:"HEAD"});if(!x.ok)throw Error("HTTP "+x.status);return true});
+await t("Game archive",async()=>{const x=await fetch(GZ,{method:"HEAD"});if(!x.ok)throw Error("HTTP "+x.status);return (+x.headers.get("content-length")/1048576||0).toFixed(1)+" MB"});
+if(cfg.proxy)await t("Proxy",async()=>{await wsTest(cfg.proxy.replace("{url}","wss%3A%2F%2Fexample.com"),4000);return true});
+o.textContent="";r.forEach(x=>{const d=el("div",x[0]?"y":"n",(x[0]?"Pass  ":"Fail  ")+x[1]+(x[2]?"  "+x[2]:""));o.appendChild(d)})}
+$("#cdiag").onclick=diag;
+
+addEventListener("keydown",e=>{
+if(e.key==="Enter"&&e.ctrlKey){e.preventDefault();launch();return}
+if(e.key==="Escape"){const m=$("#emb");if(m)m.remove();return}
+if(e.ctrlKey||e.metaKey||e.altKey)return;
+const tg=e.target.tagName;if(tg==="INPUT"||tg==="TEXTAREA"||tg==="SELECT")return;
+const k=e.key;
+if(k==="?"){const h=$("#help");h.open?h.close():h.showModal()}
+else if(k==="/"){e.preventDefault();$("#q").focus()}
+else if(k==="s"||k==="S"){save();say("Config saved.")}
+else if(k==="r"||k==="R")reset();
+else if(k==="d"||k==="D")$("#dl").click();
+else if(k==="p"||k==="P")$("#safeb").click();
+else if(k==="x"||k==="X")diag();
+else if(k==="c"||k==="C"){setField("compact",!cfg.compact);render()}});
+
+render();drawProf();drawMods();drawHist();proxyChip();
+$("#opts").addEventListener("change",e=>{if(e.target.id==="f_proxy")proxyChip()});
+$("#opts").addEventListener("input",e=>{if(e.target.id==="f_proxy"){clearTimeout(window._pt);window._pt=setTimeout(proxyChip,600)}});
+</script>
 </body>
 </html>
